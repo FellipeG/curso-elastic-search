@@ -1,0 +1,26 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:7.4.2
+    container_name: elastic
+    ports:
+      - "9200:9200"
+    networks:
+      - elasticnetwork
+    environment: 
+      - discovery.type=single-node
+
+  kibana:
+    image: kibana:7.4.2
+    ports:
+      - "5601:5601"
+    networks:
+      - elasticnetwork
+    depends_on: 
+      - elasticsearch
+
+
+networks:
+  elasticnetwork:
+    driver: bridge
+
